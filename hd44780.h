@@ -7,10 +7,10 @@
 
 /*************** User functions ****************/
 
-void hd44780_set_e_port_and_pin(volatile uint8_t *ddr, 
-                                volatile uint8_t *port, 
-                                uint8_t pin); 
-
+/*void hd44780_set_e_port_and_pin(volatile uint8_t *ddr,
+volatile uint8_t *port,
+uint8_t pin);
+*/
 void hd44780_init(void);
 
 void hd44780_put_char(char c);
