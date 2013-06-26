@@ -24,7 +24,7 @@ static uint8_t hd44780_address_counter;
 volatile uint8_t *port,
 uint8_t pin)
 {
-
+ 
 	*ddr |= _BV(pin);
 	lcd_e_port = port;
 	lcd_e_pin = pin;
