@@ -38,11 +38,11 @@ void hd44780_init(void)
 	
 	/* Set 8-bit length, use all rows, small font */
 	hd44780_function_set(1,1,0);
-	_delay_ms(15);
-	hd44780_function_set(1,1,0);
 	_delay_ms(5);
 	hd44780_function_set(1,1,0);
 	_delay_ms(5);
+	hd44780_function_set(1,1,0);
+	_delay_ms(1);
 
 	/* entire display on, cursor on (for test), blink off */
 	hd44780_display_on_off_control(1,1,0);
@@ -270,11 +270,10 @@ void hd44780_function_set(uint8_t data_length, uint8_t line_number, uint8_t font
 void hd44780_set_cgram_address(uint8_t ac)
 {
 
-	ac = 0x3F & ac; // discard two high bits
+	ac = ac & 0x3F; // discard two high bits
 
-	ac |= _BV(LCD_DB6);
-
-	hd44780_output_data(ac, 0, 0);
+	
+	hd44780_output_data((ac | 0x40), 0, 0);
 
 }
 
@@ -340,7 +339,7 @@ void hd44780_read_data_from_ram(uint8_t* data)
 
 void hd44780_output_data(uint8_t data, uint8_t rs, uint8_t rw)
 {
-
+	while(hd44780_busy());
 	
 	LCD_DATA_PORT_DDR = 0xFF;
 
@@ -372,7 +371,7 @@ void hd44780_output_data(uint8_t data, uint8_t rs, uint8_t rw)
 
 	LCD_CONTROL_PORT &= ~_BV(LCD_E);
 
-	_delay_us(100);
+
 
 }
 
