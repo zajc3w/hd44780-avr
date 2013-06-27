@@ -38,6 +38,11 @@ void hd44780_init(void)
 	
 	/* Set 8-bit length, use all rows, small font */
 	hd44780_function_set(1,1,0);
+	_delay_ms(15);
+	hd44780_function_set(1,1,0);
+	_delay_ms(5);
+	hd44780_function_set(1,1,0);
+	_delay_ms(5);
 
 	/* entire display on, cursor on (for test), blink off */
 	hd44780_display_on_off_control(1,1,0);
@@ -47,7 +52,7 @@ void hd44780_init(void)
 	/* cursor moves right, no shifting */
 	hd44780_entry_mode_set(1,0);
 
-	_delay_ms(500);
+	
 
 }
 
@@ -280,9 +285,8 @@ void hd44780_set_ddram_address(uint8_t ac)
 
 	hd44780_address_counter = ac & 0x7f;
 
-	ac |= _BV(0X80);
-
-	hd44780_output_data(ac, 0, 0);
+	
+	hd44780_output_data((ac | 0x80), 0, 0);
 
 }
 
